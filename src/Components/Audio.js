@@ -13,13 +13,13 @@ WHS.Audio = class Audio {
     		refDistance: 20,
     		volume: 1
     	} );
-
+        console.log("A");
         console.log(object);
 
     	let listener = new THREE.AudioListener();
     	let sound = new THREE.PositionalAudio( listener );
 
-    	sound.load( params.path );
+    	sound.load( params.src );
     	sound.setRefDistance( params.refDistance );
     	sound.autoplay = params.autoplay;
     	sound.setVolume( 1 );

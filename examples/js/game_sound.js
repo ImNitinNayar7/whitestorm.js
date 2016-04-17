@@ -102,7 +102,7 @@ GAME.light1 = GAME.SpotLight( {
     }
 } );
 
-GAME.parrot = GAME.Morph( {
+var parrot = new WHS.Morph( {
 
     geometry: {
         width: 2,
@@ -135,8 +135,12 @@ GAME.parrot = GAME.Morph( {
 
 } );
 
-GAME.parrotSound = GAME.Audio( GAME.parrot, {
-    src: "assets/sounds/Project_Utopia.ogg"
+parrot.addTo( GAME ).then( function( object ) {
+    console.log(object);
+    // GAME.parrotSound = GAME.Audio(object, {
+    //     src: "assets/sounds/Project_Utopia.ogg",
+    //     autoplay: true
+    // });
 } );
 
 GAME.skybox = GAME.Skybox( {

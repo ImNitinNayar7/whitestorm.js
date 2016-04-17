@@ -4597,13 +4597,13 @@ WHS.Audio = function Audio(object) {
         refDistance: 20,
         volume: 1
     });
-
+    console.log("A");
     console.log(object);
 
     var listener = new THREE.AudioListener();
     var sound = new THREE.PositionalAudio(listener);
 
-    sound.load(params.path);
+    sound.load(params.src);
     sound.setRefDistance(params.refDistance);
     sound.autoplay = params.autoplay;
     sound.setVolume(1);
