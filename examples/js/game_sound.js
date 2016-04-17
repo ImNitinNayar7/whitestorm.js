@@ -135,13 +135,23 @@ var parrot = new WHS.Morph( {
 
 } );
 
-parrot.addTo( GAME ).then( function( object ) {
+parrot.addTo(GAME, "wait");
+
+// GAME.parrotSound = GAME.Audio(parrot, {
+//      src: "assets/sounds/Project_Utopia.ogg",
+//      autoplay: true
+//  });
+
+//console.log(parrot.addTo(GAME, "wait"));
+// I know!!!!!!!!!!!!!!!!!!!!!!!
+//console.log(parrot.addTo( GAME ))
+/*.then( function( object ) {
     console.log(object);
     // GAME.parrotSound = GAME.Audio(object, {
     //     src: "assets/sounds/Project_Utopia.ogg",
     //     autoplay: true
     // });
-} );
+} );*/
 
 GAME.skybox = GAME.Skybox( {
     path: "assets/textures/skybox/skymap",
@@ -152,7 +162,7 @@ GAME.skybox = GAME.Skybox( {
     pos: { y: - 200 }
 } );
 
-GAME.cube1 = GAME.Box( {
+cube1 = GAME.Box( {
 
     geometry: {
         width: 2,
@@ -175,6 +185,14 @@ GAME.cube1 = GAME.Box( {
     }
 
 } );
+
+cube1.addTo(GAME, "wait");
+
+GAME.cubeSound = GAME.Audio(cube1, {
+    src: "assets/sounds/Project_Utopia.ogg",
+    autoplay: true,
+    loop: true
+});
 
 GAME.cube2 = GAME.Box( {
     geometry: {

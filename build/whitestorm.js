@@ -4586,30 +4586,67 @@ WHS.World.prototype.OrbitControls = function(object) {
     }
 };
 
-WHS.Audio = function Audio(object) {
-    var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+WHS.Audio = function() {
+    function Audio(object) {
+        var params = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-    _classCallCheck(this, Audio);
+        _classCallCheck(this, Audio);
 
-    WHS.API.extend(params, {
-        autoplay: false,
-        src: "",
-        refDistance: 20,
-        volume: 1
-    });
-    console.log("A");
-    console.log(object);
+        WHS.API.extend(params, {
+            autoplay: false,
+            src: "",
+            refDistance: 20,
+            volume: 1,
+            loop: false
+        });
 
-    var listener = new THREE.AudioListener();
-    var sound = new THREE.PositionalAudio(listener);
+        this.listener = new THREE.AudioListener();
+        this.sound = new THREE.PositionalAudio(this.listener);
 
-    sound.load(params.src);
-    sound.setRefDistance(params.refDistance);
-    sound.autoplay = params.autoplay;
-    sound.setVolume(1);
+        this.sound.load(params.src);
+        this.sound.setRefDistance(params.refDistance);
+        this.sound.autoplay = params.autoplay;
+        this.sound.setVolume(1);
+        this.sound.setLoop(params.loop);
 
-    object.mesh.add(sound);
-};
+        object.mesh.add(this.sound);
+    }
+
+    _createClass(Audio, [{
+        key: 'addOscillator',
+        value: function addOscillator() {
+            var params = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+
+            WHS.API.extend(params, {
+                type: "sine",
+                frequency: {
+                    value: 144
+                }
+            });
+
+            this.oscillator = this.listener.context.createOscillator();
+
+            this.oscillator.frequency.value = params.frequency.value;
+            this.oscillator.type = params.type;
+            this.oscillator.start(0);
+
+            this.sound.setNodeSource(this.oscillator);
+        }
+    }, {
+        key: 'isPlaying',
+        value: function isPlaying() {
+            return this.sound.isPlaying;
+        }
+    }, {
+        key: 'stop',
+        value: function stop() {
+            this.sound.source.stop();
+        }
+    }]);
+
+    return Audio;
+}();
 
 WHS.World.prototype.Audio = function(obj, params) {
 

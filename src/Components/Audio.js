@@ -11,22 +11,49 @@ WHS.Audio = class Audio {
     		autoplay: false,
     		src: "",
     		refDistance: 20,
-    		volume: 1
+    		volume: 1,
+            loop: false
     	} );
-        console.log("A");
-        console.log(object);
 
-    	let listener = new THREE.AudioListener();
-    	let sound = new THREE.PositionalAudio( listener );
+    	this.listener = new THREE.AudioListener();
+    	this.sound = new THREE.PositionalAudio( this.listener );
 
-    	sound.load( params.src );
-    	sound.setRefDistance( params.refDistance );
-    	sound.autoplay = params.autoplay;
-    	sound.setVolume( 1 );
+    	this.sound.load( params.src );
+    	this.sound.setRefDistance( params.refDistance );
+    	this.sound.autoplay = params.autoplay;
+    	this.sound.setVolume( 1 );
+        this.sound.setLoop( params.loop );
 
-    	object.mesh.add( sound );
+    	object.mesh.add( this.sound );
 
     }
+
+    addOscillator( params = {} ) {
+
+        WHS.API.extend( params, {
+            type: "sine",
+            frequency: {
+                value: 144
+            }
+        } );
+
+        this.oscillator = this.listener.context.createOscillator();
+
+        this.oscillator.frequency.value = params.frequency.value;
+        this.oscillator.type = params.type;
+        this.oscillator.start( 0 );
+
+        this.sound.setNodeSource( this.oscillator );
+    }
+
+    isPlaying() {
+        return this.sound.isPlaying;
+    }
+
+    stop() {
+        this.sound.source.stop();
+    }
+
 }
 
 WHS.World.prototype.Audio = function( obj, params ) {
