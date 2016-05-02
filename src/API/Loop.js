@@ -9,7 +9,7 @@
  *
  * @param  {Function} func - Function to be executed
  */
-WHS.loop = function( func ) {
+WHS.Loop = function( func ) {
 
     this.loop = {
         func: func,
@@ -25,7 +25,7 @@ WHS.loop = function( func ) {
 /**
  * Starts the loop
  */
-WHS.loop.prototype.start = function() {
+WHS.Loop.prototype.start = function() {
 
     this.loop.clock.start();
 
@@ -36,7 +36,7 @@ WHS.loop.prototype.start = function() {
 /**
  * Stops the loop
  */
-WHS.loop.prototype.stop = function() {
+WHS.Loop.prototype.stop = function() {
 
     this.loop.clock.stop();
 
@@ -47,7 +47,7 @@ WHS.loop.prototype.stop = function() {
 /**
  * Removes loop from WHS.loops array.
  */
-WHS.loop.prototype.remove = function() {
+WHS.Loop.prototype.remove = function() {
 
     this.loop.clock.stop();
 

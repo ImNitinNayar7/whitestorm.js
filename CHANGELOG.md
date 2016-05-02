@@ -28,7 +28,7 @@
    - Functions (prototype) replaced with es6 classes
    - *api.construct -> WHS.Shape*
    - *api.Wrap -> WHS.Shape.addTo*
-   - *WHS.plugins.loop -> WHS.loop*
+   - *WHS.plugins.loop -> WHS.Loop*
    - Plugin system with `WHS.Shape.prototype.pluginName`
    - Skybox: *src -> path*
 - Fixed speed bug when press *shift* on fps example.

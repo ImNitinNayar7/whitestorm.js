@@ -175,7 +175,7 @@ var dodecahedron2 = GAME.Octahedron({
 GAME.start();
 GAME.OrbitControls();
 
-var loop = new WHS.loop(() => {
+var loop = new WHS.Loop(() => {
     dodecahedron.mesh.__dirtyRotation = true;
     dodecahedron2.mesh.__dirtyRotation = true;
     dodecahedron.rotation.y += 0.05;

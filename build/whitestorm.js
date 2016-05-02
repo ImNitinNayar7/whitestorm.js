@@ -1604,7 +1604,7 @@ WHS.Camera = function(_WHS$Object) {
             var _scope = this,
                 gEnd = time;
 
-            var animation = new WHS.loop(function(clock) {
+            var animation = new WHS.Loop(function(clock) {
 
                 var u = clock.getElapsedTime() * 1000 / gEnd;
                 var vec1 = curve.getPoint(u);
@@ -1625,7 +1625,7 @@ WHS.Camera = function(_WHS$Object) {
             if (loop) setInterval(function() {
                 animation.stop();
 
-                animation = new WHS.loop(function(clock) {
+                animation = new WHS.Loop(function(clock) {
 
                     var u = clock.getElapsedTime() * 1000 / gEnd;
                     var vec1 = curve.getPoint(u);
@@ -2132,7 +2132,7 @@ WHS.Light = function(_WHS$Object3) {
             var _scope = this,
                 gEnd = time;
 
-            var animation = new WHS.loop(function(clock) {
+            var animation = new WHS.Loop(function(clock) {
 
                 var u = clock.getElapsedTime() * 1000 / gEnd;
                 var vec1 = curve.getPoint(u);
@@ -2153,7 +2153,7 @@ WHS.Light = function(_WHS$Object3) {
             if (loop) setInterval(function() {
                 animation.stop();
 
-                animation = new WHS.loop(function(clock) {
+                animation = new WHS.Loop(function(clock) {
 
                     var u = clock.getElapsedTime() * 1000 / gEnd;
                     var vec1 = curve.getPoint(u);
@@ -2668,7 +2668,7 @@ WHS.Shape = function(_WHS$Object4) {
             var _scope = this,
                 gEnd = time;
 
-            var animation = new WHS.loop(function(clock) {
+            var animation = new WHS.Loop(function(clock) {
 
                 var u = clock.getElapsedTime() * 1000 / gEnd;
                 var vec1 = curve.getPoint(u % 1);
@@ -2683,7 +2683,7 @@ WHS.Shape = function(_WHS$Object4) {
             if (loop) setInterval(function() {
                 animation.stop();
 
-                animation = new WHS.loop(function(clock) {
+                animation = new WHS.Loop(function(clock) {
 
                     var u = clock.getElapsedTime() * 1000 / gEnd;
                     var vec1 = curve.getPoint(u % 1);
@@ -3330,37 +3330,55 @@ WHS.API.loadMaterial = function() {
 };
 
 /**
- * Adds multiple objects to first object with .add method.
+ * WhitestormJS plugin loop
  *
- * @param {Object} box Object to be merged. (REQUIRED)
- * @param {Object} rabbits Object to be added. (REQUIRED)
- * @deprecated since v0.0.6
+ * @param  {Function} func - Function to be executed
  */
-WHS.API.merge = function(box, rabbits) {
+WHS.Loop = function(func) {
 
-    'use strict';
+    this.loop = {
+        func: func,
+        id: WHS.loops.length,
+        clock: new THREE.Clock(),
+        enabled: false
+    };
 
-    // More presice checking.
+    WHS.loops.push(this.loop);
+};
 
-    if (!((typeof box === 'undefined' ? 'undefined' : _typeof(box)) === 'object' && (typeof rabbits === 'undefined' ? 'undefined' : _typeof(rabbits)) === 'object')) console.error("No rabbits for the box. (arguments)", [typeof box === 'undefined' ? 'undefined' : _typeof(box), typeof rabbits === 'undefined' ? 'undefined' : _typeof(rabbits)]);
+/**
+ * Starts the loop
+ */
+WHS.Loop.prototype.start = function() {
 
-    // Will only get here if box and rabbits are objects, arrays are object !
-    if (!box) // Box should not be null, null is an object too !
+    this.loop.clock.start();
 
-    // #FIXME:0 Fix caller function line number.
-        console.error("box is undefined. Line " + new Error().lineNumber + ". Func merge.", [box, rabbits]);
-    else {
+    this.loop.enabled = true;
+};
 
-        if (Array.isArray(rabbits) && rabbits.length === 1) box.add(rabbits[0]); // Should not be 0.
+/**
+ * Stops the loop
+ */
+WHS.Loop.prototype.stop = function() {
 
-        else if (Array.isArray(rabbits) && rabbits.length > 1 && box) {
+    this.loop.clock.stop();
 
-            for (var i = 0; i < rabbits.length; i++) {
+    this.loop.enabled = false;
+};
 
-                box.add(rabbits[i]);
-            }
-        } else if (!Array.isArray(rabbits)) box.add(rabbits);
-    }
+/**
+ * Removes loop from WHS.loops array.
+ */
+WHS.Loop.prototype.remove = function() {
+    var _this7 = this;
+
+    this.loop.clock.stop();
+
+    this.loop.enabled = false;
+
+    WHS.loops.filter(function(el) {
+        return el !== _this7.loop;
+    });
 };
 
 /**
@@ -3431,58 +3449,6 @@ WHS.Watch.prototype.remove = function(element) {
     });
 
     return this;
-};
-
-/**
- * WhitestormJS plugin loop
- *
- * @param  {Function} func - Function to be executed
- */
-WHS.loop = function(func) {
-
-    this.loop = {
-        func: func,
-        id: WHS.loops.length,
-        clock: new THREE.Clock(),
-        enabled: false
-    };
-
-    WHS.loops.push(this.loop);
-};
-
-/**
- * Starts the loop
- */
-WHS.loop.prototype.start = function() {
-
-    this.loop.clock.start();
-
-    this.loop.enabled = true;
-};
-
-/**
- * Stops the loop
- */
-WHS.loop.prototype.stop = function() {
-
-    this.loop.clock.stop();
-
-    this.loop.enabled = false;
-};
-
-/**
- * Removes loop from WHS.loops array.
- */
-WHS.loop.prototype.remove = function() {
-    var _this7 = this;
-
-    this.loop.clock.stop();
-
-    this.loop.enabled = false;
-
-    WHS.loops.filter(function(el) {
-        return el !== _this7.loop;
-    });
 };
 
 /**

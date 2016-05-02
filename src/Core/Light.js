@@ -331,7 +331,7 @@ WHS.Light = class extends WHS.Object {
 		let _scope = this,
 		gEnd = time;
 
-		let animation = new WHS.loop( clock => {
+		let animation = new WHS.Loop( clock => {
 
 			let u =  clock.getElapsedTime() * 1000 / gEnd;
 			let vec1 = curve.getPoint( u );
@@ -355,7 +355,7 @@ WHS.Light = class extends WHS.Object {
 		if ( loop )	setInterval( () => { 
 				animation.stop();
 
-				animation = new WHS.loop( clock => {
+				animation = new WHS.Loop( clock => {
 
 					let u =  clock.getElapsedTime() * 1000 / gEnd;
 					let vec1 = curve.getPoint( u );
