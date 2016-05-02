@@ -4,7 +4,7 @@
  * Description:
  */
 
-const WHS = require("./build/whitestorm");
+import WHS from 'whitestormjs';
 
 WHS.debug = true;
 
