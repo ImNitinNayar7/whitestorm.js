@@ -4,6 +4,7 @@
  * Description:
  */
 const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
     entry: {
@@ -14,7 +15,7 @@ module.exports = {
         ]
     },
     output: {
-        path: "./assets/build/",
+        path: path.join(__dirname, 'assets', 'build'),
         publicPath: "/assets/build/",
         filename: "[name].js"
     },

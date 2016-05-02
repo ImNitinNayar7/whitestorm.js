@@ -6,7 +6,7 @@
 
 'use strict';
 const THREE = require("three");
-const Physijs = require("../libs/physi");
+const Physijs = require("whitestormjs-physijs");
 var _get = function get(object, property, receiver) {
     if (object === null) object = Function.prototype;
     var desc = Object.getOwnPropertyDescriptor(object, property);
@@ -28,7 +28,7 @@ var _get = function get(object, property, receiver) {
     }
 };
 
-var _createClass = function() {
+var _createClass = function () {
     function defineProperties(target, props) {
         for (var i = 0; i < props.length; i++) {
             var descriptor = props[i];
@@ -38,16 +38,17 @@ var _createClass = function() {
             Object.defineProperty(target, descriptor.key, descriptor);
         }
     }
-    return function(Constructor, protoProps, staticProps) {
+
+    return function (Constructor, protoProps, staticProps) {
         if (protoProps) defineProperties(Constructor.prototype, protoProps);
         if (staticProps) defineProperties(Constructor, staticProps);
         return Constructor;
     };
 }();
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
-} : function(obj) {
+} : function (obj) {
     return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
 };
 
@@ -82,14 +83,14 @@ function _classCallCheck(instance, Constructor) {
 function Events(n) {
     var t = {},
         f = [];
-    n = n || this, n.on = function(n, f, i) {
+    n = n || this, n.on = function (n, f, i) {
         (t[n] = t[n] || []).push([f, i]);
-    }, n.off = function(n, i) {
+    }, n.off = function (n, i) {
         n || (t = {});
         for (var o = t[n] || f, c = o.length = i ? o.length : 0; c--;) {
             i == o[c][0] && o.splice(c, 1);
         }
-    }, n.emit = function(n) {
+    }, n.emit = function (n) {
         for (var i, o = t[n] || f, c = 0; i = o[c++];) {
             i[0].apply(i[1], f.slice.call(arguments, 1));
         }
@@ -118,7 +119,7 @@ function Events(n) {
 //      controls.target.z = 150;
 // Simple substitute "OrbitControls" and the control should work as-is.
 
-THREE.OrbitControls = function(object, domElement) {
+THREE.OrbitControls = function (object, domElement) {
 
     this.object = object;
     this.domElement = domElement !== undefined ? domElement : document;
@@ -212,7 +213,7 @@ THREE.OrbitControls = function(object, domElement) {
         type: 'change'
     };
 
-    this.rotateLeft = function(angle) {
+    this.rotateLeft = function (angle) {
 
         if (angle === undefined) {
 
@@ -222,7 +223,7 @@ THREE.OrbitControls = function(object, domElement) {
         thetaDelta -= angle;
     };
 
-    this.rotateUp = function(angle) {
+    this.rotateUp = function (angle) {
 
         if (angle === undefined) {
 
@@ -233,7 +234,7 @@ THREE.OrbitControls = function(object, domElement) {
     };
 
     // pass in distance in world space to move left
-    this.panLeft = function(distance) {
+    this.panLeft = function (distance) {
 
         var panOffset = new THREE.Vector3();
         var te = this.object.matrix.elements;
@@ -245,7 +246,7 @@ THREE.OrbitControls = function(object, domElement) {
     };
 
     // pass in distance in world space to move up
-    this.panUp = function(distance) {
+    this.panUp = function (distance) {
 
         var panOffset = new THREE.Vector3();
         var te = this.object.matrix.elements;
@@ -258,7 +259,7 @@ THREE.OrbitControls = function(object, domElement) {
 
     // main entry point; pass in Vector2 of change desired in pixel space,
     // right and down are positive
-    this.pan = function(delta) {
+    this.pan = function (delta) {
 
         var element = scope.domElement === document ? scope.domElement.body : scope.domElement;
 
@@ -286,7 +287,7 @@ THREE.OrbitControls = function(object, domElement) {
         }
     };
 
-    this.dollyIn = function(dollyScale) {
+    this.dollyIn = function (dollyScale) {
 
         if (dollyScale === undefined) {
 
@@ -296,7 +297,7 @@ THREE.OrbitControls = function(object, domElement) {
         scale /= dollyScale;
     };
 
-    this.dollyOut = function(dollyScale) {
+    this.dollyOut = function (dollyScale) {
 
         if (dollyScale === undefined) {
 
@@ -306,7 +307,7 @@ THREE.OrbitControls = function(object, domElement) {
         scale *= dollyScale;
     };
 
-    this.update = function() {
+    this.update = function () {
 
         var position = this.object.position;
         var offset = position.clone().sub(this.target);
@@ -684,7 +685,7 @@ THREE.OrbitControls = function(object, domElement) {
         state = STATE.NONE;
     }
 
-    this.domElement.addEventListener('contextmenu', function(event) {
+    this.domElement.addEventListener('contextmenu', function (event) {
         event.preventDefault();
     }, false);
     this.domElement.addEventListener('mousedown', onMouseDown, false);
@@ -732,13 +733,14 @@ var Stats = function Stats() {
     function p(a, b) {
         a.appendChild(a.firstChild).style.height = Math.min(30, 30 - 30 * b) + "px";
     }
+
     var q = self.performance && self.performance.now ? self.performance.now.bind(performance) : Date.now,
         k = q(),
         r = k,
         t = 0,
         n = 0,
         c = f("div", "stats", "width:80px;opacity:0.9;cursor:pointer");
-    c.addEventListener("mousedown", function(a) {
+    c.addEventListener("mousedown", function (a) {
         a.preventDefault();
         m(++n % c.children.length);
     }, !1);
@@ -816,14 +818,14 @@ var Stats = function Stats() {
  *
  */
 
-THREE.SubdivisionModifier = function(subdivisions) {
+THREE.SubdivisionModifier = function (subdivisions) {
     'use strict';
 
     this.subdivisions = subdivisions === undefined ? 1 : subdivisions;
 };
 
 // Applies the "modify" pattern
-THREE.SubdivisionModifier.prototype.modify = function(geometry) {
+THREE.SubdivisionModifier.prototype.modify = function (geometry) {
 
     var repeats = this.subdivisions;
 
@@ -838,7 +840,7 @@ THREE.SubdivisionModifier.prototype.modify = function(geometry) {
     geometry.computeVertexNormals();
 };
 
-(function() {
+(function () {
 
     // Some constants
     var WARNINGS = !true; // Set to true for development
@@ -920,7 +922,7 @@ THREE.SubdivisionModifier.prototype.modify = function(geometry) {
     /////////////////////////////
 
     // Performs one iteration of Subdivision
-    THREE.SubdivisionModifier.prototype.smooth = function(geometry) {
+    THREE.SubdivisionModifier.prototype.smooth = function (geometry) {
 
         var tmp = new THREE.Vector3();
 
@@ -949,9 +951,9 @@ THREE.SubdivisionModifier.prototype.modify = function(geometry) {
 
         /******************************************************
          *
-         *	Step 1.
-         *	For each edge, create a new Edge Vertex,
-         *	then position it.
+         *    Step 1.
+         *    For each edge, create a new Edge Vertex,
+         *    then position it.
          *
          *******************************************************/
 
@@ -1010,8 +1012,8 @@ THREE.SubdivisionModifier.prototype.modify = function(geometry) {
 
         /******************************************************
          *
-         *	Step 2.
-         *	Reposition each source vertices.
+         *    Step 2.
+         *    Reposition each source vertices.
          *
          *******************************************************/
 
@@ -1083,9 +1085,9 @@ THREE.SubdivisionModifier.prototype.modify = function(geometry) {
 
         /******************************************************
          *
-         *	Step 3.
-         *	Generate Faces between source vertecies
-         *	and edge vertices.
+         *    Step 3.
+         *    Generate Faces between source vertecies
+         *    and edge vertices.
          *
          *******************************************************/
 
@@ -1137,19 +1139,19 @@ addCSSRule(document.styleSheets[0], '@keyframes fadeOut', 'to {opacity: 0}', 0);
 addCSSRule(document.styleSheets[0], '@keyframes fadeIn', 'from {opacity: 0} to {opacity: 1}', 0);
 
 //Adds function to triggers animation
-Element.prototype.fadeOut = function(t) {
+Element.prototype.fadeOut = function (t) {
 
     this.style.webkitAnimationDuration = (t || 1) + 's';
     this.style.webkitAnimationName = "fadeOut";
     this.style.webkitAnimationPlayState = 'running';
 
-    this.addEventListener('animationend', function() {
+    this.addEventListener('animationend', function () {
         this.style.display = 'none';
         this.style.webkitAnimationPlayState = 'paused';
     });
 };
 
-Element.prototype.fadeIn = function(t, display) {
+Element.prototype.fadeIn = function (t, display) {
 
     this.style.display = display || 'block';
 
@@ -1157,7 +1159,7 @@ Element.prototype.fadeIn = function(t, display) {
     this.style.webkitAnimationName = "fadeIn";
     this.style.webkitAnimationPlayState = 'running';
 
-    this.addEventListener('animationend', function() {
+    this.addEventListener('animationend', function () {
         this.style.display = display || 'block';
     });
 };
@@ -1165,7 +1167,7 @@ Element.prototype.fadeIn = function(t, display) {
 // Array.isArray;
 if (typeof Array.isArray === 'undefined') {
 
-    Array.isArray = function(obj) {
+    Array.isArray = function (obj) {
 
         'use strict';
 
@@ -1174,7 +1176,7 @@ if (typeof Array.isArray === 'undefined') {
 }
 
 // event.movementX and event.movementY kind of polyfill
-(function() {
+(function () {
 
     if (!MouseEvent.prototype.hasOwnProperty('movementX') || !MouseEvent.prototype.hasOwnProperty('mozMovementX')) {
         //Checks for support
@@ -1186,7 +1188,7 @@ if (typeof Array.isArray === 'undefined') {
             lastY: 0
         };
 
-        MouseEvent.prototype.getMovementX = function() {
+        MouseEvent.prototype.getMovementX = function () {
             'use strict';
 
             var value = this.clientX - mouse.lastX;
@@ -1195,7 +1197,7 @@ if (typeof Array.isArray === 'undefined') {
             return value;
         };
 
-        MouseEvent.prototype.getMovementY = function() {
+        MouseEvent.prototype.getMovementY = function () {
             'use strict';
 
             var value = this.clientY - mouse.lastY;
@@ -1278,15 +1280,15 @@ var WHS = {
 
 console.log('WhitestormJS', WHS.REVISION);
 
-WHS.API.loadJSON = function(url, callback, texturePath) {
+WHS.API.loadJSON = function (url, callback, texturePath) {
     return WHS.loader.JSON.load(url, callback, texturePath);
 };
 
-WHS.API.loadTexture = function(url, onLoad, onProgress, onError) {
+WHS.API.loadTexture = function (url, onLoad, onProgress, onError) {
     return WHS.loader.Texture.load(url, onLoad, onProgress, onError);
 };
 
-WHS.API.loadFont = function(url, onLoad, onProgress, onError) {
+WHS.API.loadFont = function (url, onLoad, onProgress, onError) {
     return WHS.loader.Font.load(url, onLoad, onProgress, onError);
 };
 
@@ -1305,7 +1307,7 @@ if (typeof define === 'function' && define.amd) {
  * @param {...Objects} extensions - other objects that will be merged to first.
  * @return {Object} Extended object.
  */
-WHS.API.extend = function(object) {
+WHS.API.extend = function (object) {
     for (var _len = arguments.length, extensions = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         extensions[_key - 1] = arguments[_key];
     }
@@ -1374,7 +1376,7 @@ WHS.API.extend = function(object) {
 };
 
 /** Light super class */
-WHS.Light = function() {
+WHS.Light = function () {
     /**
      * Constructing WHS.Light object.
      *
@@ -1493,7 +1495,7 @@ WHS.Light = function() {
             var mesh = this.mesh,
                 _scope = this;
 
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
 
                 try {
 
@@ -1504,7 +1506,7 @@ WHS.Light = function() {
 
                     _scope.rotation.set(_scope.__params.rot.x, _scope.__params.rot.y, _scope.__params.rot.z);
 
-                    tags.forEach(function(tag) {
+                    tags.forEach(function (tag) {
                         _scope[tag] = true;
                     });
 
@@ -1541,7 +1543,7 @@ WHS.Light = function() {
             var _mesh = this.mesh,
                 _scope = this;
 
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
 
                 try {
 
@@ -1557,7 +1559,7 @@ WHS.Light = function() {
 
                     if (_scope._wait) {
 
-                        _scope._mesh.addEventListener('ready', function() {
+                        _scope._mesh.addEventListener('ready', function () {
                             resolve(_scope);
 
                             _scope.emit("ready");
@@ -1582,7 +1584,7 @@ WHS.Light = function() {
 
             var _scope = this;
 
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
 
                 try {
 
@@ -1706,7 +1708,7 @@ WHS.Light = function() {
     return _class;
 }();
 
-WHS.API.loadMaterial = function(material) {
+WHS.API.loadMaterial = function (material) {
 
     'use strict';
 
@@ -1801,7 +1803,7 @@ WHS.API.loadMaterial = function(material) {
  * @param {Object} rabbits Object to be added. (REQUIRED)
  * @deprecated since v0.0.6
  */
-WHS.API.merge = function(box, rabbits) {
+WHS.API.merge = function (box, rabbits) {
 
     'use strict';
 
@@ -1829,7 +1831,7 @@ WHS.API.merge = function(box, rabbits) {
 };
 
 /** Shape super class */
-WHS.Shape = function() {
+WHS.Shape = function () {
     /**
      * Constructing WHS.Shape object.
      *
@@ -1944,9 +1946,9 @@ WHS.Shape = function() {
 
             if (tags.indexOf("wait") >= 0) {
 
-                Promise.all(_scope.wait).then(function() {
+                Promise.all(_scope.wait).then(function () {
 
-                    return new Promise(function(resolve, reject) {
+                    return new Promise(function (resolve, reject) {
 
                         try {
 
@@ -1973,7 +1975,7 @@ WHS.Shape = function() {
                 });
             } else {
 
-                return new Promise(function(resolve, reject) {
+                return new Promise(function (resolve, reject) {
 
                     try {
 
@@ -2026,9 +2028,9 @@ WHS.Shape = function() {
 
             if (tags.indexOf("wait") >= 0) {
 
-                Promise.all(_scope.wait).then(function() {
+                Promise.all(_scope.wait).then(function () {
 
-                    return new Promise(function(resolve, reject) {
+                    return new Promise(function (resolve, reject) {
 
                         try {
 
@@ -2042,14 +2044,14 @@ WHS.Shape = function() {
 
                             if (_scope._wait) {
 
-                                _scope.mesh.addEventListener('ready', function() {
+                                _scope.mesh.addEventListener('ready', function () {
                                     resolve(_scope);
                                 });
                             } else {
                                 resolve(_scope);
                             }
 
-                            _scope.mesh.addEventListener('collide', function() {
+                            _scope.mesh.addEventListener('collide', function () {
                                 _scope.emit("collide");
                             });
 
@@ -2059,7 +2061,7 @@ WHS.Shape = function() {
                 });
             } else {
 
-                return new Promise(function(resolve, reject) {
+                return new Promise(function (resolve, reject) {
 
                     try {
 
@@ -2073,7 +2075,7 @@ WHS.Shape = function() {
 
                         if (_scope._wait) {
 
-                            _scope.mesh.addEventListener('ready', function() {
+                            _scope.mesh.addEventListener('ready', function () {
 
                                 resolve(_scope);
                             });
@@ -2081,7 +2083,7 @@ WHS.Shape = function() {
                             resolve(_scope);
                         }
 
-                        _scope.mesh.addEventListener('collide', function() {
+                        _scope.mesh.addEventListener('collide', function () {
                             _scope.emit("ready");
                         });
 
@@ -2251,7 +2253,7 @@ WHS.Shape = function() {
  * @param {Object} options - Parameters of texture.
  * @return {Object} Three.JS texture.
  */
-WHS.API.texture = function(url, options) {
+WHS.API.texture = function (url, options) {
 
     'use strict';
 
@@ -2285,7 +2287,7 @@ WHS.API.texture = function(url, options) {
     return texture;
 };
 
-WHS.Watch = function(queue) {
+WHS.Watch = function (queue) {
 
     'use strict';
 
@@ -2294,7 +2296,7 @@ WHS.Watch = function(queue) {
     return this;
 };
 
-WHS.Watch.prototype.add = function(element) {
+WHS.Watch.prototype.add = function (element) {
 
     'use strict';
 
@@ -2303,11 +2305,11 @@ WHS.Watch.prototype.add = function(element) {
     return this;
 };
 
-WHS.Watch.prototype.remove = function(element) {
+WHS.Watch.prototype.remove = function (element) {
 
     'use strict';
 
-    this._queue = this._queue.filter(function(item) {
+    this._queue = this._queue.filter(function (item) {
         return item != element;
     });
 
@@ -2319,7 +2321,7 @@ WHS.Watch.prototype.remove = function(element) {
  *
  * @param  {Function} func - Function to be executed
  */
-WHS.loop = function(func) {
+WHS.loop = function (func) {
 
     this.loop = {
         func: func,
@@ -2333,7 +2335,7 @@ WHS.loop = function(func) {
 /**
  * Starts the loop
  */
-WHS.loop.prototype.start = function() {
+WHS.loop.prototype.start = function () {
 
     this.loop.enabled = true;
 };
@@ -2341,7 +2343,7 @@ WHS.loop.prototype.start = function() {
 /**
  * Stops the loop
  */
-WHS.loop.prototype.stop = function() {
+WHS.loop.prototype.stop = function () {
 
     this.loop.enabled = false;
 };
@@ -2349,18 +2351,18 @@ WHS.loop.prototype.stop = function() {
 /**
  * Removes loop from WHS.loops array.
  */
-WHS.loop.prototype.remove = function() {
+WHS.loop.prototype.remove = function () {
     var _this2 = this;
 
     this.loop.enabled = false;
 
-    WHS.loops.filter(function(el) {
+    WHS.loops.filter(function (el) {
         return el !== _this2.loop;
     });
 };
 
 /** Class that initializates 3d world. */
-WHS.World = function() {
+WHS.World = function () {
     /**
      * Create a 3D world and define defaults.
      *
@@ -2449,7 +2451,7 @@ WHS.World = function() {
         // NOTE: ==================== Autoresize. ======================
         var scope = this;
 
-        if (target.autoresize) window.addEventListener('resize', function() {
+        if (target.autoresize) window.addEventListener('resize', function () {
             scope.resize();
         });
 
@@ -2648,7 +2650,7 @@ WHS.World = function() {
         key: '_execLoops',
         value: function _execLoops(time) {
 
-            WHS.loops.forEach(function(loop) {
+            WHS.loops.forEach(function (loop) {
                 if (loop.enabled) loop.func(time);
             });
         }
@@ -2708,7 +2710,7 @@ WHS.World = function() {
  * @extends WHS.Shape
  */
 
-WHS.Box = function(_WHS$Shape) {
+WHS.Box = function (_WHS$Shape) {
     _inherits(Box, _WHS$Shape);
 
     /**
@@ -2750,7 +2752,7 @@ WHS.Box = function(_WHS$Shape) {
     return Box;
 }(WHS.Shape);
 
-WHS.World.prototype.Box = function(params) {
+WHS.World.prototype.Box = function (params) {
     var object = new WHS.Box(params);
 
     object.addTo(this);
@@ -2764,7 +2766,7 @@ WHS.World.prototype.Box = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Cylinder = function(_WHS$Shape2) {
+WHS.Cylinder = function (_WHS$Shape2) {
     _inherits(Cylinder, _WHS$Shape2);
 
     /**
@@ -2808,7 +2810,7 @@ WHS.Cylinder = function(_WHS$Shape2) {
     return Cylinder;
 }(WHS.Shape);
 
-WHS.World.prototype.Cylinder = function(params) {
+WHS.World.prototype.Cylinder = function (params) {
     var object = new WHS.Cylinder(params);
 
     object.addTo(this);
@@ -2822,7 +2824,7 @@ WHS.World.prototype.Cylinder = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Dodecahedron = function(_WHS$Shape3) {
+WHS.Dodecahedron = function (_WHS$Shape3) {
     _inherits(Dodecahedron, _WHS$Shape3);
 
     /**
@@ -2862,7 +2864,7 @@ WHS.Dodecahedron = function(_WHS$Shape3) {
     return Dodecahedron;
 }(WHS.Shape);
 
-WHS.World.prototype.Dodecahedron = function(params) {
+WHS.World.prototype.Dodecahedron = function (params) {
     var object = new WHS.Dodecahedron(params);
 
     object.addTo(this);
@@ -2875,7 +2877,7 @@ WHS.World.prototype.Dodecahedron = function(params) {
  *
  * @extends WHS.Shape
  */
-WHS.Extrude = function(_WHS$Shape4) {
+WHS.Extrude = function (_WHS$Shape4) {
     _inherits(Extrude, _WHS$Shape4);
 
     /**
@@ -2915,7 +2917,7 @@ WHS.Extrude = function(_WHS$Shape4) {
     return Extrude;
 }(WHS.Shape);
 
-WHS.World.prototype.Extrude = function(params) {
+WHS.World.prototype.Extrude = function (params) {
     var object = new WHS.Extrude(params);
 
     object.addTo(this);
@@ -2929,7 +2931,7 @@ WHS.World.prototype.Extrude = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Icosahderon = function(_WHS$Shape5) {
+WHS.Icosahderon = function (_WHS$Shape5) {
     _inherits(Icosahedron, _WHS$Shape5);
 
     /**
@@ -2969,7 +2971,7 @@ WHS.Icosahderon = function(_WHS$Shape5) {
     return Icosahedron;
 }(WHS.Shape);
 
-WHS.World.prototype.Icosahedron = function(params) {
+WHS.World.prototype.Icosahedron = function (params) {
     var object = new WHS.Icosahderon(params);
 
     object.addTo(this);
@@ -2983,7 +2985,7 @@ WHS.World.prototype.Icosahedron = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Lathe = function(_WHS$Shape6) {
+WHS.Lathe = function (_WHS$Shape6) {
     _inherits(Lathe, _WHS$Shape6);
 
     /**
@@ -3021,7 +3023,7 @@ WHS.Lathe = function(_WHS$Shape6) {
     return Lathe;
 }(WHS.Shape);
 
-WHS.World.prototype.Lathe = function(params) {
+WHS.World.prototype.Lathe = function (params) {
     var object = new WHS.Lathe(params);
 
     object.addTo(this);
@@ -3035,7 +3037,7 @@ WHS.World.prototype.Lathe = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Model = function(_WHS$Shape7) {
+WHS.Model = function (_WHS$Shape7) {
     _inherits(Model, _WHS$Shape7);
 
     /**
@@ -3064,13 +3066,13 @@ WHS.Model = function(_WHS$Shape7) {
 
         var scope = _this9;
 
-        _get(Object.getPrototypeOf(Model.prototype), 'wait', _this9).call(_this9, new Promise(function(resolve, reject) {
+        _get(Object.getPrototypeOf(Model.prototype), 'wait', _this9).call(_this9, new Promise(function (resolve, reject) {
 
-            WHS.API.loadJSON(params.geometry.path, function(data, materials) {
+            WHS.API.loadJSON(params.geometry.path, function (data, materials) {
 
                 if (params.geometry.physics != "") {
 
-                    WHS.API.loadJSON(params.geometry.physics, function(data2) {
+                    WHS.API.loadJSON(params.geometry.physics, function (data2) {
 
                         if (params.material.useVertexColors) var material = WHS.API.loadMaterial(WHS.API.extend(params.material, {
                             morphTargets: true,
@@ -3119,7 +3121,7 @@ WHS.Model = function(_WHS$Shape7) {
     return Model;
 }(WHS.Shape);
 
-WHS.World.prototype.Model = function(params) {
+WHS.World.prototype.Model = function (params) {
     var object = new WHS.Model(params);
 
     object.addTo(this, "wait");
@@ -3133,7 +3135,7 @@ WHS.World.prototype.Model = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Morph = function(_WHS$Shape8) {
+WHS.Morph = function (_WHS$Shape8) {
     _inherits(Morph, _WHS$Shape8);
 
     /**
@@ -3164,9 +3166,9 @@ WHS.Morph = function(_WHS$Shape8) {
 
         var scope = _this10;
 
-        _get(Object.getPrototypeOf(Morph.prototype), 'wait', _this10).call(_this10, new Promise(function(resolve, reject) {
+        _get(Object.getPrototypeOf(Morph.prototype), 'wait', _this10).call(_this10, new Promise(function (resolve, reject) {
 
-            WHS.API.loadJSON(params.geometry.path, function(data, materials) {
+            WHS.API.loadJSON(params.geometry.path, function (data, materials) {
 
                 if (params.material.useVertexColors) var material = WHS.API.loadMaterial(WHS.API.extend(params.material, {
                     morphTargets: true,
@@ -3198,7 +3200,7 @@ WHS.Morph = function(_WHS$Shape8) {
     return Morph;
 }(WHS.Shape);
 
-WHS.World.prototype.Morph = function(params) {
+WHS.World.prototype.Morph = function (params) {
     var object = new WHS.Morph(params);
 
     object.addTo(this, "wait");
@@ -3212,7 +3214,7 @@ WHS.World.prototype.Morph = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Octahedron = function(_WHS$Shape9) {
+WHS.Octahedron = function (_WHS$Shape9) {
     _inherits(Octahedron, _WHS$Shape9);
 
     /**
@@ -3252,7 +3254,7 @@ WHS.Octahedron = function(_WHS$Shape9) {
     return Octahedron;
 }(WHS.Shape);
 
-WHS.World.prototype.Octahedron = function(params) {
+WHS.World.prototype.Octahedron = function (params) {
     var object = new WHS.Octahedron(params);
 
     object.addTo(this);
@@ -3266,7 +3268,7 @@ WHS.World.prototype.Octahedron = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Parametric = function(_WHS$Shape10) {
+WHS.Parametric = function (_WHS$Shape10) {
     _inherits(Parametric, _WHS$Shape10);
 
     /**
@@ -3290,7 +3292,8 @@ WHS.Parametric = function(_WHS$Shape10) {
 
         WHS.API.extend(params.geometry, {
 
-            func: function func() {},
+            func: function func() {
+            },
             slices: 10,
             stacks: 10
 
@@ -3308,7 +3311,7 @@ WHS.Parametric = function(_WHS$Shape10) {
     return Parametric;
 }(WHS.Shape);
 
-WHS.World.prototype.Parametric = function(params) {
+WHS.World.prototype.Parametric = function (params) {
     var object = new WHS.Parametric(params);
 
     object.addTo(this);
@@ -3322,7 +3325,7 @@ WHS.World.prototype.Parametric = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Plane = function(_WHS$Shape11) {
+WHS.Plane = function (_WHS$Shape11) {
     _inherits(Plane, _WHS$Shape11);
 
     /**
@@ -3364,7 +3367,7 @@ WHS.Plane = function(_WHS$Shape11) {
     return Plane;
 }(WHS.Shape);
 
-WHS.World.prototype.Plane = function(params) {
+WHS.World.prototype.Plane = function (params) {
     var object = new WHS.Plane(params);
 
     object.addTo(this);
@@ -3378,7 +3381,7 @@ WHS.World.prototype.Plane = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Polyhedron = function(_WHS$Shape12) {
+WHS.Polyhedron = function (_WHS$Shape12) {
     _inherits(Polyhedron, _WHS$Shape12);
 
     /**
@@ -3436,7 +3439,7 @@ WHS.Polyhedron = function(_WHS$Shape12) {
     return Polyhedron;
 }(WHS.Shape);
 
-WHS.World.prototype.Polyhedron = function(params) {
+WHS.World.prototype.Polyhedron = function (params) {
     var object = new WHS.Polyhedron(params);
 
     object.addTo(this);
@@ -3450,7 +3453,7 @@ WHS.World.prototype.Polyhedron = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Ring = function(_WHS$Shape13) {
+WHS.Ring = function (_WHS$Shape13) {
     _inherits(Ring, _WHS$Shape13);
 
     /**
@@ -3496,7 +3499,7 @@ WHS.Ring = function(_WHS$Shape13) {
     return Ring;
 }(WHS.Shape);
 
-WHS.World.prototype.Ring = function(params) {
+WHS.World.prototype.Ring = function (params) {
     var object = new WHS.Ring(params);
 
     object.addTo(this);
@@ -3510,7 +3513,7 @@ WHS.World.prototype.Ring = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Shape2D = function(_WHS$Shape14) {
+WHS.Shape2D = function (_WHS$Shape14) {
     _inherits(Shape2D, _WHS$Shape14);
 
     /**
@@ -3545,7 +3548,7 @@ WHS.Shape2D = function(_WHS$Shape14) {
     return Shape2D;
 }(WHS.Shape);
 
-WHS.World.prototype.Shape2D = function(params) {
+WHS.World.prototype.Shape2D = function (params) {
     var object = new WHS.Shape2D(params);
 
     object.addTo(this);
@@ -3559,7 +3562,7 @@ WHS.World.prototype.Shape2D = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Sphere = function(_WHS$Shape15) {
+WHS.Sphere = function (_WHS$Shape15) {
     _inherits(Sphere, _WHS$Shape15);
 
     /**
@@ -3601,7 +3604,7 @@ WHS.Sphere = function(_WHS$Shape15) {
     return Sphere;
 }(WHS.Shape);
 
-WHS.World.prototype.Sphere = function(params) {
+WHS.World.prototype.Sphere = function (params) {
     var object = new WHS.Sphere(params);
 
     object.addTo(this);
@@ -3615,7 +3618,7 @@ WHS.World.prototype.Sphere = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Tetrahedron = function(_WHS$Shape16) {
+WHS.Tetrahedron = function (_WHS$Shape16) {
     _inherits(Tetrahedron, _WHS$Shape16);
 
     /**
@@ -3655,7 +3658,7 @@ WHS.Tetrahedron = function(_WHS$Shape16) {
     return Tetrahedron;
 }(WHS.Shape);
 
-WHS.World.prototype.Tetrahedron = function(params) {
+WHS.World.prototype.Tetrahedron = function (params) {
     var object = new WHS.Tetrahedron(params);
 
     object.addTo(this);
@@ -3669,7 +3672,7 @@ WHS.World.prototype.Tetrahedron = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Text = function(_WHS$Shape17) {
+WHS.Text = function (_WHS$Shape17) {
     _inherits(Text, _WHS$Shape17);
 
     /**
@@ -3714,9 +3717,9 @@ WHS.Text = function(_WHS$Shape17) {
 
         var scope = _this19;
 
-        _get(Object.getPrototypeOf(Text.prototype), 'wait', _this19).call(_this19, new Promise(function(resolve, reject) {
+        _get(Object.getPrototypeOf(Text.prototype), 'wait', _this19).call(_this19, new Promise(function (resolve, reject) {
 
-            WHS.API.loadFont(params.geometry.parameters.font, function(font) {
+            WHS.API.loadFont(params.geometry.parameters.font, function (font) {
 
                 params.geometry.parameters.font = font;
 
@@ -3736,7 +3739,7 @@ WHS.Text = function(_WHS$Shape17) {
     return Text;
 }(WHS.Shape);
 
-WHS.World.prototype.Text = function(params) {
+WHS.World.prototype.Text = function (params) {
     var object = new WHS.Text(params);
 
     object.addTo(this, "wait");
@@ -3750,7 +3753,7 @@ WHS.World.prototype.Text = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Torus = function(_WHS$Shape18) {
+WHS.Torus = function (_WHS$Shape18) {
     _inherits(Torus, _WHS$Shape18);
 
     /**
@@ -3796,7 +3799,7 @@ WHS.Torus = function(_WHS$Shape18) {
     return Torus;
 }(WHS.Shape);
 
-WHS.World.prototype.Torus = function(params) {
+WHS.World.prototype.Torus = function (params) {
     var object = new WHS.Torus(params);
 
     object.addTo(this);
@@ -3810,7 +3813,7 @@ WHS.World.prototype.Torus = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Torusknot = function(_WHS$Shape19) {
+WHS.Torusknot = function (_WHS$Shape19) {
     _inherits(Torusknot, _WHS$Shape19);
 
     /**
@@ -3858,7 +3861,7 @@ WHS.Torusknot = function(_WHS$Shape19) {
     return Torusknot;
 }(WHS.Shape);
 
-WHS.World.prototype.Torusknot = function(params) {
+WHS.World.prototype.Torusknot = function (params) {
     var object = new WHS.Torusknot(params);
 
     object.addTo(this);
@@ -3872,7 +3875,7 @@ WHS.World.prototype.Torusknot = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Tube = function(_WHS$Shape20) {
+WHS.Tube = function (_WHS$Shape20) {
     _inherits(Tube, _WHS$Shape20);
 
     /**
@@ -3919,10 +3922,10 @@ WHS.Tube = function(_WHS$Shape20) {
         key: 'CustomSinCurve',
         get: function get() {
 
-            return THREE.Curve.create(function(scale) {
+            return THREE.Curve.create(function (scale) {
                 //custom curve constructor
                 this.scale = scale || 1;
-            }, function(t) {
+            }, function (t) {
                 //getPoint: t is between 0-1
                 var tx = t * 3 - 1.5,
                     ty = Math.sin(2 * Math.PI * t),
@@ -3936,7 +3939,7 @@ WHS.Tube = function(_WHS$Shape20) {
     return Tube;
 }(WHS.Shape);
 
-WHS.World.prototype.Tube = function(params) {
+WHS.World.prototype.Tube = function (params) {
     var object = new WHS.Tube(params);
 
     object.addTo(this);
@@ -3949,7 +3952,7 @@ WHS.World.prototype.Tube = function(params) {
  *
  * @extends WHS.Light
  */
-WHS.AmbientLight = function(_WHS$Light) {
+WHS.AmbientLight = function (_WHS$Light) {
     _inherits(AmbientLight, _WHS$Light);
 
     /**
@@ -3976,7 +3979,7 @@ WHS.AmbientLight = function(_WHS$Light) {
     return AmbientLight;
 }(WHS.Light);
 
-WHS.World.prototype.AmbientLight = function(params) {
+WHS.World.prototype.AmbientLight = function (params) {
     var object = new WHS.AmbientLight(params);
 
     object.addTo(this);
@@ -3989,7 +3992,7 @@ WHS.World.prototype.AmbientLight = function(params) {
  *
  * @extends WHS.Light
  */
-WHS.DirectionalLight = function(_WHS$Light2) {
+WHS.DirectionalLight = function (_WHS$Light2) {
     _inherits(DirectionalLight, _WHS$Light2);
 
     /**
@@ -4017,7 +4020,7 @@ WHS.DirectionalLight = function(_WHS$Light2) {
     return DirectionalLight;
 }(WHS.Light);
 
-WHS.World.prototype.DirectionalLight = function(params) {
+WHS.World.prototype.DirectionalLight = function (params) {
     var object = new WHS.DirectionalLight(params);
 
     object.addTo(this);
@@ -4030,7 +4033,7 @@ WHS.World.prototype.DirectionalLight = function(params) {
  *
  * @extends WHS.Light
  */
-WHS.HemisphereLight = function(_WHS$Light3) {
+WHS.HemisphereLight = function (_WHS$Light3) {
     _inherits(HemisphereLight, _WHS$Light3);
 
     /**
@@ -4059,7 +4062,7 @@ WHS.HemisphereLight = function(_WHS$Light3) {
     return HemisphereLight;
 }(WHS.Light);
 
-WHS.World.prototype.HemisphereLight = function(params) {
+WHS.World.prototype.HemisphereLight = function (params) {
     var object = new WHS.HemisphereLight(params);
 
     object.addTo(this);
@@ -4072,7 +4075,7 @@ WHS.World.prototype.HemisphereLight = function(params) {
  *
  * @extends WHS.Light
  */
-WHS.NormalLight = function(_WHS$Light4) {
+WHS.NormalLight = function (_WHS$Light4) {
     _inherits(NormalLight, _WHS$Light4);
 
     /**
@@ -4099,7 +4102,7 @@ WHS.NormalLight = function(_WHS$Light4) {
     return NormalLight;
 }(WHS.Light);
 
-WHS.World.prototype.NormalLight = function(params) {
+WHS.World.prototype.NormalLight = function (params) {
     var object = new WHS.NormalLight(params);
 
     object.addTo(this);
@@ -4112,7 +4115,7 @@ WHS.World.prototype.NormalLight = function(params) {
  *
  * @extends WHS.Light
  */
-WHS.PointLight = function(_WHS$Light5) {
+WHS.PointLight = function (_WHS$Light5) {
     _inherits(PointLight, _WHS$Light5);
 
     /**
@@ -4142,7 +4145,7 @@ WHS.PointLight = function(_WHS$Light5) {
     return PointLight;
 }(WHS.Light);
 
-WHS.World.prototype.PointLight = function(params) {
+WHS.World.prototype.PointLight = function (params) {
     var object = new WHS.PointLight(params);
 
     object.addTo(this);
@@ -4155,7 +4158,7 @@ WHS.World.prototype.PointLight = function(params) {
  *
  * @extends WHS.Light
  */
-WHS.SpotLight = function(_WHS$Light6) {
+WHS.SpotLight = function (_WHS$Light6) {
     _inherits(SpotLight, _WHS$Light6);
 
     /**
@@ -4187,7 +4190,7 @@ WHS.SpotLight = function(_WHS$Light6) {
     return SpotLight;
 }(WHS.Light);
 
-WHS.World.prototype.SpotLight = function(params) {
+WHS.World.prototype.SpotLight = function (params) {
     var object = new WHS.SpotLight(params);
 
     object.addTo(this);
@@ -4204,7 +4207,7 @@ WHS.World.prototype.SpotLight = function(params) {
 
 var PI_2 = Math.PI / 2;
 
-WHS.World.prototype.FPSControls = function(object) {
+WHS.World.prototype.FPSControls = function (object) {
 
     'use strict';
 
@@ -4215,7 +4218,7 @@ WHS.World.prototype.FPSControls = function(object) {
         ypos: 1
     });
 
-    this.controls = new function(camera, mesh, params) {
+    this.controls = new function (camera, mesh, params) {
 
         /* Velocity properties */
         var velocityFactor = 1,
@@ -4246,7 +4249,7 @@ WHS.World.prototype.FPSControls = function(object) {
             moveRight = false,
             canJump = false;
 
-        player.addEventListener("collision", function(other_object, v, r, contactNormal) {
+        player.addEventListener("collision", function (other_object, v, r, contactNormal) {
             if (contactNormal.y < 0.5) // Use a "good" threshold value between 0 and 1 here!
                 canJump = true;
         });
@@ -4355,11 +4358,11 @@ WHS.World.prototype.FPSControls = function(object) {
 
         this.enabled = false;
 
-        this.getObject = function() {
+        this.getObject = function () {
             return yawObject;
         };
 
-        this.getDirection = function(targetVec) {
+        this.getDirection = function (targetVec) {
             targetVec.set(0, 0, -1);
             quat.multiplyVector3(targetVec);
         };
@@ -4369,7 +4372,7 @@ WHS.World.prototype.FPSControls = function(object) {
         var inputVelocity = new THREE.Vector3(),
             euler = new THREE.Euler();
 
-        this.update = function(delta) {
+        this.update = function (delta) {
 
             var moveVec = new THREE.Vector3();
 
@@ -4433,7 +4436,7 @@ WHS.World.prototype.FPSControls = function(object) {
 
         var element = document.body;
 
-        this.pointerlockchange = function() {
+        this.pointerlockchange = function () {
             if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
 
                 controls.enabled = true;
@@ -4455,7 +4458,7 @@ WHS.World.prototype.FPSControls = function(object) {
     document.addEventListener('mozpointerlockchange', this.pointerlockchange, false);
     document.addEventListener('webkitpointerlockchange', this.pointerlockchange, false);
 
-    this.pointerlockerror = function() {
+    this.pointerlockerror = function () {
         console.warn("Pointer lock error.");
     };
 
@@ -4463,7 +4466,7 @@ WHS.World.prototype.FPSControls = function(object) {
     document.addEventListener('mozpointerlockerror', this.pointerlockerror, false);
     document.addEventListener('webkitpointerlockerror', this.pointerlockerror, false);
 
-    target.block.addEventListener('click', function() {
+    target.block.addEventListener('click', function () {
 
         element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
 
@@ -4494,7 +4497,7 @@ WHS.World.prototype.FPSControls = function(object) {
  *
  * @param {Object} object - Object followed by camera.
  */
-WHS.World.prototype.OrbitControls = function(object) {
+WHS.World.prototype.OrbitControls = function (object) {
 
     this.controls = new THREE.OrbitControls(this._camera, this._renderer.domElement);
 
@@ -4514,7 +4517,7 @@ WHS.World.prototype.OrbitControls = function(object) {
  * Three.js fog effect.
  *
  */
-WHS.Fog = function() {
+WHS.Fog = function () {
     /**
      * Creates fog.
      *
@@ -4557,7 +4560,7 @@ WHS.Fog = function() {
     return Fog;
 }();
 
-WHS.World.prototype.Fog = function(params) {
+WHS.World.prototype.Fog = function (params) {
     var object = new WHS.Fog(params);
 
     object.addTo(this);
@@ -4568,7 +4571,7 @@ WHS.World.prototype.Fog = function(params) {
 /**
  * Three.js FogExp2 effect.
  */
-WHS.FogExp2 = function() {
+WHS.FogExp2 = function () {
     /**
      * Create fog (exp2).
      *
@@ -4609,7 +4612,7 @@ WHS.FogExp2 = function() {
     return FogExp2;
 }();
 
-WHS.World.prototype.FogExp2 = function(params) {
+WHS.World.prototype.FogExp2 = function (params) {
     var object = new WHS.FogExp2(params);
 
     object.addTo(this);
@@ -4623,7 +4626,7 @@ WHS.World.prototype.FogExp2 = function(params) {
  * @extends WHS.Shape
  */
 
-WHS.Skybox = function(_WHS$Shape21) {
+WHS.Skybox = function (_WHS$Shape21) {
     _inherits(Skybox, _WHS$Shape21);
 
     /**
@@ -4702,7 +4705,7 @@ WHS.Skybox = function(_WHS$Shape21) {
     return Skybox;
 }(WHS.Shape);
 
-WHS.World.prototype.Skybox = function(params) {
+WHS.World.prototype.Skybox = function (params) {
     var object = new WHS.Skybox(params);
 
     object.addTo(this);
