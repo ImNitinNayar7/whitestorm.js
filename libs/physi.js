@@ -1,6 +1,7 @@
-window.Physijs = (function() {
+const Physijs = (function() {
 	'use strict';
 
+	const THREE = require("three");
 	var SUPPORT_TRANSFERABLE,
 		_Physijs = Physijs, // used for noConflict method
 		Physijs = {}, // object assigned to window.Physijs
@@ -1398,3 +1399,4 @@ window.Physijs = (function() {
 
 	return Physijs;
 })();
+module.exports = Physijs;
