@@ -1,11 +1,11 @@
 {
     "env": {
-        "module": {
+        "node": {
             "presets": [
                 "es2015"
             ]
         },
-        "webpack": {
+        "browser": {
             "presets": [
                 "es2015-webpack"
             ]

@@ -1,6 +1,8 @@
 import {join} from 'path';
 import webpack from 'webpack';
 
+process.env.BABEL_ENV = 'browser';
+
 function config(production) {
   return {
     devtool: production ? 'hidden-source-map' : 'eval-source-map',

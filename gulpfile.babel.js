@@ -10,7 +10,7 @@ const dest = 'lib';
 
 const isProduction = process.env.NODE_ENV == 'production';
 
-process.env.BABEL_ENV = 'module';
+process.env.BABEL_ENV = 'node';
 
 // default task
 gulp.task('default', ['build']);
