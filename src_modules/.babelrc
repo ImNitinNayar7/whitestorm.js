@@ -1,0 +1,9 @@
+{
+    "preset": [
+        "es2015-webpack"
+    ],
+    "plugins": [
+        "transform-es2015-template-literals"
+    ],
+    "compact": false
+}
