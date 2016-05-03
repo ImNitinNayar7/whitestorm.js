@@ -29,4 +29,6 @@ const Watch = function (queue) {
     };
 };
 
-module.exports = Watch;
+export {
+  Watch as default
+};

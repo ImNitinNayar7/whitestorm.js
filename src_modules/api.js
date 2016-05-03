@@ -1,5 +1,5 @@
-const THREE = require("three");
-const {loadJSON, loadTexture, loadFont} = require("./loader");
+import THREE from "three";
+import {loadJSON, loadTexture, loadFont} from "./loader";
 
 /**
  * Extending object with other objects.
@@ -207,9 +207,15 @@ const Loop = function (func) {
         });
     };
     loops.push(loop);
+
+    return {
+      start,
+      stop,
+      remove
+    }
 };
 
-module.exports = {
+export {
     extend,
     loadMaterial,
     texture,
