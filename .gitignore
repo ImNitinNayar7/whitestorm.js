@@ -1,34 +1,6 @@
-# https://git-scm.com/docs/gitignore
-# https://help.github.com/articles/ignoring-files
-# Example .gitignore files: https://github.com/github/gitignore
-/bower_components/
-/node_modules/
-/examples/test/
-.imdone/
-.sass-cache/
-.todo
-*.iml
-.idea/
-.ipr
-.iws
-*~
-~*
-*.diff
-*.patch
-*.bak
 .DS_Store
-Thumbs.db
-.project
-.*proj
-.svn/
-*.swp
-*.swo
-*.log
-.buildpath
-.settings
+node_modules
 npm-debug.log
-nohup.out
-_site
-_data
-elasticsearch-*
-config/base.yaml
+
+/lib
+/build
