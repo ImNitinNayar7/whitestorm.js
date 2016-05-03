@@ -8,6 +8,8 @@ function config(production) {
     output: {
       path: join(__dirname, 'build'),
       filename: 'bundle.js',
+      library: 'WHS',
+      libraryTarget: 'umd',
     },
     module: {
       loaders: [
